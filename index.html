@@ -1,10 +1,7 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Graphical Equations</title>
+    <title>Pythonic Code in HTML</title>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML"></script>
   <style>
@@ -12,13 +9,99 @@
       margin-bottom: 20px;
     }
   </style>
+    <style>
+        pre {
+            background-color: #363636;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            width: 1600px; 
+            height: 500px; 
+            overflow: auto;
+        }
+
+        .lib {
+            color: #648c88
+        }
+      
+        .defpink {
+            color: #f92672;
+        }
+        
+        .printblue {
+            color: #66d9ef;
+        }
+        
+        .string {
+            color: #e6db74;
+        }
+        
+        .comment {
+            color: #75715e;
+        }
+
+        .init {
+            color:#5a738a;
+        }
+        
+        .classcol {
+            color: #4ca186;
+        }
+    </style>
 </head>
 <body>
+    <pre>
+<span class="defpink">import </span>matplotlib.pyplot<span class='defpink'> as </span>plt
+<span class="defpink">import </span>numpy<span class='defpink'> as </span>np
 
-<div class="equation">
-  <img src="https://latex.codecogs.com/svg.latex?\Delta&space;w&space;=&space;-\eta&space;\frac{\partial&space;L}{\partial&space;w}" title="\Delta w = -\eta \frac{\partial L}{\partial w}" />
-</div>
+<span class='comment'># Generate random training loss data</span>
+training_loss = np.random.rand(100) * 100
+
+<span class='comment'># Check for NaN or infinity values</span>
+<span class="defpink">if </span>np.isnan(training_loss).any():
+    nan_indices = <span class='init'>np.where</span>(np.isnan(training_loss))[0]
+    <span class="defpink">for</span> i <span class="init">in</span> nan_indices:
+        training_loss[i] = 0  <span class="comment"># Replace NaN with 0</span>
+
+<span class="defpink">if </span>np.isinf(training_loss).any():
+    inf_indices = np.where(np.isinf(training_loss))[0]
+    <span class="defpink">for</span> i <span class="init">in</span> inf_indices:
+        training_loss[i] = np.nanmedian(training_loss)  <span class="comment"># Replace inf with median value</span>
+
+<span class='comment'># Calculate the moving average (optional)</span>
+window_size = 10
+smoothed_loss = np.convolve(training_loss, np.ones(window_size) / window_size, mode='valid')
 
 
+<span class='printblue'>plt.plot</span>(training_loss, label="Raw Loss")
+<span class="defpink">if </span>len(smoothed_loss) > 0:
+    plt.plot(smoothed_loss, label="Smoothed Loss (window size: {})".format(window_size))
+
+
+<span class="defpink">if </span>np.isnan(training_loss).any():
+    nan_indices = np.where(np.isnan(training_loss))[0]
+    <span class="defpink">for</span> i <span class="init">in</span> nan_indices:
+        plt.axvline(x=i, color='red', linestyle='--', label='NaN Value')
+
+<span class="defpink">if </span>np.isinf(training_loss).any():
+    inf_indices = np.where(np.isinf(training_loss))[0]
+    <span class="defpink">for</span> i <span class="init">in</span> inf_indices:
+        plt.axvline(x=i, color='orange', linestyle='--', label='Infinity Value')
+
+<span class='printblue'>plt.xlabel</span>("Epoch")
+<span class='printblue'>plt.ylabel</span>("Loss")
+<span class='printblue'>plt.title</span>("Training Loss Curve")
+<span class='printblue'>plt.legend</span>()
+<span class='printblue'>plt.grid</span>(True)
+
+
+<span class="defpink">if </span>any(training_loss[-window_size:] == training_loss[-window_size - 1]):
+    <span class='printblue'>plt.text</span>(len(training_loss) - window_size // 2, training_loss[-window_size], "Potential Plateau", ha='center', va='bottom', fontsize=10)
+
+<span class="defpink">if </span>np.diff(training_loss[-window_size:])[-1] > 10 * np.mean(np.diff(training_loss)):  <span class="comment"># Adjust threshold as needed</span>
+    <span class='printblue'>plt.text</span>(len(training_loss) - window_size // 2, training_loss[-window_size], "Possible Divergence", ha='center', va='top', fontsize=10)
+    </pre>
 </body>
 </html>
