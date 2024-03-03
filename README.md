@@ -1,4 +1,4 @@
-#$ **RNN Loss Gradient Equation** $
+# $ **RNN Loss Gradient Equation** $
 
 The following equation represents the backpropagation step for calculating the loss gradient in a Recurrent Neural Network (RNN):
 
