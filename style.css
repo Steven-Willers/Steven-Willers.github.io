@@ -1,0 +1,35 @@
+/* Basic reset styles for a more consistent look */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #333; /* Dark background color */
+  color: #fff; /* Light text color */
+}
+
+/* Dark theme styles */
+.header {
+  background-color: #000; /* Dark background color for header */
+  color: #fff; /* Light text color for header */
+  padding: 20px;
+  display: flex; /* Allow image and content to be side-by-side */
+  align-items: center; /* Vertically center content */
+}
+
+.header img {
+  width: 200px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 20px;
+}
+
+.header-content {
+  flex: 1; /* Take up remaining space in the header */
+}
+
+h1, p {
+  margin: 5px 0;
+}
+
+h1 {
+  font-size: 2em; /* Adjust font size as desired */
+}
