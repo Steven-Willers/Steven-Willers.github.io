@@ -2,14 +2,13 @@
 <html>
 <head>
     <title>Pythonic Code in HTML</title>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML"></script>
-  <style>
-    .equation {
-      margin-bottom: 20px;
-    }
-  </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML"></script>
     <style>
+        .equation {
+            margin-bottom: 20px;
+        }
+
         pre {
             background-color: #363636;
             color: #f8f8f2;
@@ -17,8 +16,8 @@
             border-radius: 5px;
             font-family: 'Courier New', Courier, monospace;
             white-space: pre-wrap;
-            width: 1600px; 
-            height: 500px; 
+            width: 160px; 
+            height: 800px; 
             overflow: auto;
         }
 
@@ -53,55 +52,60 @@
 </head>
 <body>
     <pre>
-<span class="defpink">import </span>matplotlib.pyplot<span class='defpink'> as </span>plt
-<span class="defpink">import </span>numpy<span class='defpink'> as </span>np
+        <span class="defpink">import </span>matplotlib.pyplot<span class='defpink'> as </span>plt
+        <span class="defpink">import </span>numpy<span class='defpink'> as </span>np
 
-<span class='comment'># Generate random training loss data</span>
-training_loss = np.random.rand(100) * 100
+        <span class='comment'># Generate random training loss data</span>
+        training_loss = np.random.rand(100) * 100
 
-<span class='comment'># Check for NaN or infinity values</span>
-<span class="defpink">if </span>np.isnan(training_loss).any():
-    nan_indices = <span class='init'>np.where</span>(np.isnan(training_loss))[0]
-    <span class="defpink">for</span> i <span class="init">in</span> nan_indices:
-        training_loss[i] = 0  <span class="comment"># Replace NaN with 0</span>
+        <span class='comment'># Check for NaN or infinity values</span>
+        <span class="defpink">if </span>np.isnan(training_loss).any():
+            nan_indices = <span class='init'>np.where</span>(np.isnan(training_loss))[0]
+            <span class="defpink">for</span> i <span class="init">in</span> nan_indices:
+                training_loss[i] = 0  <span class="comment"># Replace NaN with 0</span>
 
-<span class="defpink">if </span>np.isinf(training_loss).any():
-    inf_indices = np.where(np.isinf(training_loss))[0]
-    <span class="defpink">for</span> i <span class="init">in</span> inf_indices:
-        training_loss[i] = np.nanmedian(training_loss)  <span class="comment"># Replace inf with median value</span>
+        <span class="defpink">if </span>np.isinf(training_loss).any():
+            inf_indices = np.where(np.isinf(training_loss))[0]
+            <span class="defpink">for</span> i <span class="init">in</span> inf_indices:
+                training_loss[i] = np.nanmedian(training_loss)  <span class="comment"># Replace inf with median value</span>
 
-<span class='comment'># Calculate the moving average (optional)</span>
-window_size = 10
-smoothed_loss = np.convolve(training_loss, np.ones(window_size) / window_size, mode='valid')
-
-
-<span class='printblue'>plt.plot</span>(training_loss, label="Raw Loss")
-<span class="defpink">if </span>len(smoothed_loss) > 0:
-    plt.plot(smoothed_loss, label="Smoothed Loss (window size: {})".format(window_size))
+        <span class='comment'># Calculate the moving average (optional)</span>
+        window_size = 10
+        smoothed_loss = np.convolve(training_loss, np.ones(window_size) / window_size, mode='valid')
 
 
-<span class="defpink">if </span>np.isnan(training_loss).any():
-    nan_indices = np.where(np.isnan(training_loss))[0]
-    <span class="defpink">for</span> i <span class="init">in</span> nan_indices:
-        plt.axvline(x=i, color='red', linestyle='--', label='NaN Value')
-
-<span class="defpink">if </span>np.isinf(training_loss).any():
-    inf_indices = np.where(np.isinf(training_loss))[0]
-    <span class="defpink">for</span> i <span class="init">in</span> inf_indices:
-        plt.axvline(x=i, color='orange', linestyle='--', label='Infinity Value')
-
-<span class='printblue'>plt.xlabel</span>("Epoch")
-<span class='printblue'>plt.ylabel</span>("Loss")
-<span class='printblue'>plt.title</span>("Training Loss Curve")
-<span class='printblue'>plt.legend</span>()
-<span class='printblue'>plt.grid</span>(True)
+        <span class='printblue'>plt.plot</span>(training_loss, label="Raw Loss")
+        <span class="defpink">if </span>len(smoothed_loss) > 0:
+            plt.plot(smoothed_loss, label="Smoothed Loss (window size: {})".format(window_size))
 
 
-<span class="defpink">if </span>any(training_loss[-window_size:] == training_loss[-window_size - 1]):
-    <span class='printblue'>plt.text</span>(len(training_loss) - window_size // 2, training_loss[-window_size], "Potential Plateau", ha='center', va='bottom', fontsize=10)
+        <span class="defpink">if </span>np.isnan(training_loss).any():
+            nan_indices = np.where(np.isnan(training_loss))[0]
+            <span class="defpink">for</span> i <span class="init">in</span> nan_indices:
+                plt.axvline(x=i, color='red', linestyle='--', label='NaN Value')
 
-<span class="defpink">if </span>np.diff(training_loss[-window_size:])[-1] > 10 * np.mean(np.diff(training_loss)):  <span class="comment"># Adjust threshold as needed</span>
-    <span class='printblue'>plt.text</span>(len(training_loss) - window_size // 2, training_loss[-window_size], "Possible Divergence", ha='center', va='top', fontsize=10)
+        <span class="defpink">if </span>np.isinf(training_loss).any():
+            inf_indices = np.where(np.isinf(training_loss))[0]
+            <span class="defpink">for</span> i <span class="init">in</span> inf_indices:
+                plt.axvline(x=i, color='orange', linestyle='--', label='Infinity Value')
+
+        <span class='printblue'>plt.xlabel</span>("Epoch")
+        <span class='printblue'>plt.ylabel</span>("Loss")
+        <span class='printblue'>plt.title</span>("Training Loss Curve")
+        <span class='printblue'>plt.legend</span>()
+        <span class='printblue'>plt.grid</span>(True)
+
+
+        <span class="defpink">if </span>any(training_loss[-window_size:] == training_loss[-window_size - 1]):
+            <span class='printblue'>plt.text</span>(len(training_loss) - window_size // 2, training_loss[-window_size], "Potential Plateau", ha='center', va='bottom', fontsize=10)
+
+        <span class="defpink">if </span>np.diff(training_loss[-window_size:])[-1] > 10 * np.mean(np.diff(training_loss)):  <span class="comment"># Adjust threshold as needed</span>
+            <span class='printblue'>plt.text</span>(len(training_loss) - window_size // 2, training_loss[-window_size], "Possible Divergence", ha='center', va='top', fontsize=10)
     </pre>
+
+    <!-- Equation example -->
+    <div class="equation">
+        \( E = mc^2 \)
+    </div>
 </body>
 </html>
