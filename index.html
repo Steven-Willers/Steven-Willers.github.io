@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turtle Animation</title>
+<style>
+/* CSS styling for the animation container */
+.animation-container {
+  width: 400px; /* Adjust according to your animation size */
+  height: 400px; /* Adjust according to your animation size */
+  border: 1px solid black;
+  overflow: hidden;
+  position: relative;
+}
+
+/* CSS styling for the turtle */
+.turtle {
+  width: 50px; /* Adjust according to your turtle size */
+  height: 50px; /* Adjust according to your turtle size */
+  position: absolute;
+  top: 50%; /* Adjust vertical position */
+  left: 50%; /* Adjust horizontal position */
+  transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body>
+<div class="animation-container">
+  <img src="my_anim.py" alt="Turtle Animation" class="turtle">
+</div>
+</body>
+</html>
