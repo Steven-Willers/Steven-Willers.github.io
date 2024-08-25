@@ -1,27 +1,83 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Graphical Equations</title>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML"></script>
-  <style>
-    .equation {
-      margin-bottom: 20px;
-    }
-    .h1 {
-      font-family:Georgia;
-    }
-    
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advice Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'EB Garamond', serif;
+            overflow: hidden;
+        }
+
+        .background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: black;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .text-container {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .options-container {
+            margin-top: 2rem;
+        }
+
+        .option-button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin: 10px;
+            border: 2px solid black;
+            background-color: transparent;
+            color: black;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .option-button:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
 </head>
 <body>
+    <video autoplay muted loop class="background-video">
+        <source src="tree_with_the_drops.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
 
-<h1> Jax is great </h1>
-</div>
-
-
+    <div class="content">
+        <div class="text-container">
+            <p>What is the best piece of advice you would like to receive from your past?</p>
+            <p>The best time to start was 15 years ago, the second best time is now.</p>
+             <p> Traveller, write an advice to your futire self ! </p>
+        </div>
+        <div class="options-container">
+            <a href="read-advice.html" class="option-button">Read Advice</a>
+            <a href="write-advice.html" class="option-button">Write Advice</a>
+        </div>
+    </div>
 </body>
 </html>
