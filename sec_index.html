@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advice Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'EB Garamond', serif;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .text-container {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .options-container {
+            margin-top: 2rem;
+        }
+
+        .option-button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin: 10px;
+            border: 2px solid white;
+            background-color: transparent;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .option-button:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="text-container">
+            <p id="text1"></p>
+            <p id="text2"></p>
+            <p id="text3"></p>
+        </div>
+        <div class="options-container">
+            <a href="read-advice.html" class="option-button">Read Advice</a><b>
+            <br> <p>
+            <a href="write-advice.html" class="option-button">Write Advice</a></p>
+        </div>
+    </div>
+
+    <script>
+        const texts = [
+            "Hi Traveller!, What is the best piece of advice you would like to receive from your past?",
+            "Remember, the best time to start was 15 years ago, the second best time is now.",
+            "Traveller, write an advice to your future self!"
+        ];
+
+        function typeWriter(text, elementId, speed, callback) {
+            let i = 0;
+            const element = document.getElementById(elementId);
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    setTimeout(callback, 500);
+                }
+            }
+            type();
+        }
+
+        function startTyping() {
+            typeWriter(texts[0], "text1", 50, () => {
+                typeWriter(texts[1], "text2", 50, () => {
+                    typeWriter(texts[2], "text3", 50);
+                });
+            });
+        }
+
+        window.onload = startTyping;
+    </script>
+</body>
+  </html
