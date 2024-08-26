@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write Advice</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'EB Garamond', serif;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .advice-form {
+            background: #000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .advice-form textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-family: 'EB Garamond', serif;
+            font-size: 1.2rem;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            resize: none;
+            color: #fff;
+            background: #333;
+        }
+
+        .advice-form button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: 2px solid white;
+            background-color: #fff;
+            color: #000;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .advice-form button:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .back-link {
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: black;
+            border: 2px solid black;
+            padding: 10px 20px;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .back-link:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="advice-form">
+            <textarea id="adviceInput" placeholder="Write your advice here..."></textarea>
+            <button onclick="saveAdvice()">Submit Advice</button>
+        </div>
+        <a href="read_advice.html" class="back-link">Read Advice</a>
+    </div>
+
+    <script>
+        function saveAdvice() {
+            const adviceInput = document.getElementById('adviceInput');
+            const adviceText = adviceInput.value.trim();
+
+            if (adviceText) {
+                let savedAdvice = JSON.parse(localStorage.getItem('advice')) || [];
+                savedAdvice.push(adviceText);
+                localStorage.setItem('advice', JSON.stringify(savedAdvice));
+                adviceInput.value = '';
+                alert('Your advice has been saved!');
+            }
+        }
+    </script>
+</body>
+</html>
