@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Advice</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'EB Garamond', serif;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .advice-list {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 400px;
+            margin-bottom: 20px;
+        }
+
+        .advice-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .back-link {
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: black;
+            border: 2px solid black;
+            padding: 10px 20px;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
+        }
+
+        .back-link:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="advice-list" id="adviceList">
+            <!-- Advice items will be loaded here from write_advice.html -->
+        </div>
+        <a href="write_advice.html" class="back-link">Write Your Advice</a>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            // Load the saved advice from localStorage
+            const adviceList = document.getElementById('adviceList');
+            const savedAdvice = JSON.parse(localStorage.getItem('advice')) || [];
+
+            savedAdvice.forEach(advice => {
+                const adviceItem = document.createElement('div');
+                adviceItem.className = 'advice-item';
+                adviceItem.textContent = advice;
+                adviceList.appendChild(adviceItem);
+            });
+        });
+    </script>
+</body>
+</html>
