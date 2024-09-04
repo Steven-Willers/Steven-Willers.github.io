@@ -4,82 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Read Advice</title>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'EB Garamond', serif;
+            font-family: 'Lobster', cursive;
             overflow: hidden;
-            background-color: #f0f0f0;
+            background-color: black;
+            color: white;
         }
-
         .content {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100%;
-            color: black;
             text-align: center;
             padding: 20px;
         }
-
         .advice-list {
             width: 100%;
             max-width: 600px;
-            background: rgba(255, 255, 255, 0.9);
+            background: black;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
             overflow-y: auto;
             max-height: 400px;
             margin-bottom: 20px;
         }
-
         .advice-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
             font-size: 1.2rem;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
         }
-
+        .advice-item:last-child {
+            border-bottom: none;
+        }
         .back-link {
             text-decoration: none;
             font-size: 1.2rem;
-            color: black;
-            border: 2px solid black;
+            color: white;
+            border: 2px solid white;
             padding: 10px 20px;
             transition: background-color 0.3s, color 0.3s;
             border-radius: 5px;
         }
-
         .back-link:hover {
-            background-color: black;
+            background-color: white;
+            color: black;
+        }
+        .thumb-button {
+            background: black;
+            border: 2px solid white;
+            cursor: pointer;
+            font-size: 1.2rem;
             color: white;
+            transition: all 0.3s;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .thumb-button.active {
+            background: white;
+            color: black;
+        }
+        .like-count {
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <div class="content">
         <div class="advice-list" id="adviceList">
-            <!-- Advice items will be loaded here from write_advice.html -->
+            <!-- Advice items will be loaded here -->
         </div>
         <a href="write_advice.html" class="back-link">Write Your Advice</a>
     </div>
-
     <script>
+        function createAdviceItem(advice) {
+            const adviceItem = document.createElement('div');
+            adviceItem.className = 'advice-item';
+            
+            const adviceText = document.createElement('span');
+            adviceText.textContent = advice;
+            
+            const likeCount = document.createElement('span');
+            likeCount.className = 'like-count';
+            likeCount.textContent = '0';
+
+            const thumbButton = document.createElement('button');
+            thumbButton.className = 'thumb-button';
+            thumbButton.innerHTML = '<i class="material-icons">thumb_up</i>';
+            thumbButton.onclick = function() {
+                const count = parseInt(likeCount.textContent);
+                if (this.classList.contains('active')) {
+                    likeCount.textContent = count - 1;
+                } else {
+                    likeCount.textContent = count + 1;
+                }
+                this.classList.toggle('active');
+            };
+            
+            adviceItem.appendChild(adviceText);
+            adviceItem.appendChild(likeCount);
+            adviceItem.appendChild(thumbButton);
+            return adviceItem;
+        }
+
         window.addEventListener('load', () => {
-            // Load the saved advice from localStorage
             const adviceList = document.getElementById('adviceList');
-            const savedAdvice = JSON.parse(localStorage.getItem('advice')) || [];
+            let savedAdvice = JSON.parse(localStorage.getItem('advice')) || [];
+
+            if (savedAdvice.length < 30) {
+                savedAdvice = [
+                    "Don't look back",
+                    "Seize the day",
+                    "Be kind to yourself"
+                ];
+                localStorage.setItem('advice', JSON.stringify(savedAdvice));
+            }
 
             savedAdvice.forEach(advice => {
-                const adviceItem = document.createElement('div');
-                adviceItem.className = 'advice-item';
-                adviceItem.textContent = advice;
+                const adviceItem = createAdviceItem(advice);
                 adviceList.appendChild(adviceItem);
             });
         });
